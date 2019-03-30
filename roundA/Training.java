@@ -1,8 +1,4 @@
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 class Training {
@@ -31,32 +27,20 @@ class Training {
 
     private static int solve(int p, int[] tab) {
         Arrays.sort(tab);
-
-        int[] tabTmp = new int[tab.length - p + 1];
-
+        
+        int sum =0;
+        for(int i = 0; i < (p-1) ; i++){
+            sum+=tab[i];
+        }
+        int minHour = Integer.MAX_VALUE;
 
         for (int i = p-1; i < tab.length; i++) {
-
-            for(int j = i-(p-1); j < i ; j++){
-                tabTmp[i-(p-1)]+=tab[i] - tab[j];
-            }
-            
+           sum+= tab[i];
+           minHour = Math.min(minHour, (tab[i]*p) - sum);
+           sum-= tab[i-p+1];
         }
 
-        int minHour = tabTmp[0];
-        for (int x : tabTmp) {
-            minHour = Math.min(minHour, x);
-        }
         return minHour;
     }
-
-    private static int getHours(List<Integer> value) {
-        int max = value.get(0);
-        int x = 0;
-
-        for (int var : value) {
-            x += max - var;
-        }
-        return x;
-    }
+    
 }
